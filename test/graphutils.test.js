@@ -1,11 +1,14 @@
-import graphbuilder from './builders/graphbuilder.js'
-import graphutils from './graphutils.js'
+import graphutils from '../src/graphutils.js';
+import graphbuilder from '../src/builders/graphbuilder.js';
+
+// simulate this wihout considering directions -> https://www.usna.edu/Users/cs/roche/courses/s12si335/u06/ex2color.png
 
 let a = { name: 'a', city: 'rome' };
 let b = { name: 'b', country: 'germany' };
 let c = { name: 'c', isFavorite: true };
 let d = { name: 'd', surname: 'simple_surname'};
 let e = { name: 'e', testUsed: 'JEST'};
+
 
 const graph = graphbuilder
                 .withNode(a.name,a.name,a)
@@ -24,6 +27,22 @@ const graph = graphbuilder
                 .build();
 
 
-graphutils.areNeighbours(a,e,graph)
-//console.log(graph.edges);
+test('A and B are neighbours', () => {
+  expect(graphutils.areNeighbours(a,b,graph)).toBe(true);
+});
 
+test('A and C are neighbours', () => {
+  expect(graphutils.areNeighbours(a,c,graph)).toBe(true);
+});
+
+test('A and D are neighbours', () => {
+  expect(graphutils.areNeighbours(a,d,graph)).toBe(true);
+});
+
+test('C and E are neighbours', () => {
+  expect(graphutils.areNeighbours(c,e,graph)).toBe(true);
+});
+
+test('A and E are NOT neighbours', () => {
+  expect(graphutils.areNeighbours(a,e,graph)).not.toBe(true);
+});

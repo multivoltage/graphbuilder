@@ -13,6 +13,7 @@ const graphbuilder = {
     edges: []
   },
 
+
   withEdge(source,target,distance,label,metadata = {}){
     if(!source._graph_props || !target._graph_props || source._graph_props.type !== 'node' ||
         target._graph_props.type !== 'node'){
