@@ -1,0 +1,27 @@
+// I follow structure https://github.com/jsongraph/json-graph-specification
+const edgebuilder = {
+
+  // string, [data]
+  edge(source,target,distance,label,metadata = {}){
+    if(!source || source === '' || !target || label === ''){
+      console.log('please provide valid source/target nodes for this edge');
+      return;
+    }
+
+    let edge = {
+      type: 'edge',      
+      id: source.id + '_' + target.id,
+      label: label,
+      source: source.id,
+      target: target.id,
+      distance: distance,
+      metadata: metadata
+    };
+
+    //console.log('created edge from',source.label,'to',target.label);
+    return edge;
+  }
+
+};
+
+export default edgebuilder;
