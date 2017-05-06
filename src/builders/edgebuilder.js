@@ -10,10 +10,10 @@ const edgebuilder = {
 
     let edge = {
       type: 'edge',      
-      id: source.id + '_' + target.id,
+      id: source._graph_props.id + '_' + target._graph_props.id,
       label: label,
-      source: source.id,
-      target: target.id,
+      source_id: source._graph_props.id,
+      target_id: target._graph_props.id,
       distance: distance,
       metadata: metadata
     };
