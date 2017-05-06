@@ -46,3 +46,7 @@ test('C and E are neighbours', () => {
 test('A and E are NOT neighbours', () => {
   expect(graphutils.areNeighbours(a,e,graph)).not.toBe(true);
 });
+
+test('C and B are NOT neighbours', () => {
+  expect(graphutils.areNeighbours(c,b,graph)).not.toBe(true);
+});

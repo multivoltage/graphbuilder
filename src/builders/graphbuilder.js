@@ -1,18 +1,18 @@
 import nodebuilder from './nodebuilder.js';
 import edgebuilder from './edgebuilder.js';
 
-// I follow structure https://github.com/jsongraph/json-graph-specification
-
-
 const graphbuilder = {
 
   g: {
     type: 'graph',
     metadata: {},
-    nodes: [],
-    edges: []
+    map: new Map(),
+    nodes: new Set()
   },
 
+  getEdgeId(src,dst){
+    return src._graph_props.id + '_' + dst._graph_props.id;
+  },
 
   withEdge(source,target,distance,label,metadata = {}){
     if(!source._graph_props || !target._graph_props || source._graph_props.type !== 'node' ||
@@ -24,19 +24,18 @@ const graphbuilder = {
       console.log('Warning, you want to connect two node woth undefined distance');
     }
 
-    let edgeExisting = false;
-    this.g.edges = this.g.edges.map((current) =>{
-
-      if(current.id === (source._graph_props.id + '_' + target._graph_props.id))
-        edgeExisting = true;
-      return current;
-
-    });
-
-    if(edgeExisting)
-      console.log('cannot add same edge with id',edge.id);
-    else 
-      this.g.edges.push(edgebuilder.edge(source,target,distance,label,metadata));
+    let edgeExisting =  false;
+    if(this.g.map.get(this.getEdgeId(source,target)) || this.g.map.get(this.getEdgeId(target,source))){
+      edgeExisting = true;
+      console.log('Warning, edge from',source.label,'and',target.label,'already exist');
+    }
+    if(!edgeExisting){
+      this.g.map.set(edgebuilder.edge(source,target,distance,label,metadata),
+      {
+        src: source,
+        dst: target        
+      });
+    }
 
     return this;
   },
@@ -44,25 +43,16 @@ const graphbuilder = {
   withNode(id,label,obj){
 
     let nodeExisting = false;
-    this.g.nodes = this.g.nodes.map((current) =>{
-      
-      if(id === current._graph_props.id)
+    for(let pair of this.g.map.values()){
+      if(pair.src._graph_props.id === id || pair.dst._graph_props.id){
+        console.log('node with id',id,'is already existing');
         nodeExisting = true;
-      return current;
-    
-    });
-
-    if(nodeExisting)
-      console.log('cannot add same node with id',node._graph_props.id);
-    else {
-      obj = nodebuilder.node(id,label,obj);
-      if(obj._graph_props.type !== 'node'){
-        console.log('Warning, you want to insert node witch is not a node type');
         return this;
-      } else {
-        this.g.nodes.push(obj);
       }
     }
+
+    if(!nodeExisting)
+      this.g.nodes.add(nodebuilder.node(id,label,obj));
 
     return this;
   },

@@ -23,7 +23,5 @@ const graph = graphbuilder
                 .withEdge(e,b,4,e.name+b.name)
                 .build();
 
-
-graphutils.areNeighbours(a,e,graph)
-//console.log(graph.edges);
+//console.log(graph);
 

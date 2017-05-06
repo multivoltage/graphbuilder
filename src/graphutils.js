@@ -26,21 +26,48 @@ const graphutils = {
             return false;   
         }
 
-        let areNeighbours = false;
-
-        graph.edges.forEach((edge) => { 
-            if(this.edgeContainsNode(src,edge) && this.edgeContainsNode(dst,edge))
-                areNeighbours = true;
-        });
+        for(let edge of graph.map.keys()){
+            if(this.edgeContainsNode(edge,src,graph) && this.edgeContainsNode(edge,dst,graph))
+                return true;
+        }
         
-        return areNeighbours;
+        return false;
     },
 
-    edgeContainsNode(obj,edge){
-        let contains = obj._graph_props.id === edge.source_id || obj._graph_props.id === edge.target_id;
-        //console.log(contains);
-        return contains;
+    edgeContainsNode(edge,node,graph){
+        for(let [current_edge,pair] of graph.map){
+            if(edge.id === current_edge.id){
+                // found edge
+                if(node._graph_props.id === pair.src._graph_props.id || node._graph_props.id === pair.dst._graph_props.id)
+                    return true;
+                else 
+                    return false;
+            }
+        }
+        return false;
+    },
+
+    getNeighbours(node,graph){
+        if(!node || !graph){
+            console.log('cannot retrive neighbours of undefines obj/graph');
+            return [];
+        }
+        
+        let neighbours = new Set();
+        for(let [edge,pair] of graph.map){
+            if(pair.src._graph_props.id === node._graph_props.id && !neighbours.has(pair.src))
+                neighbours.add(pair.src);
+            
+            if(pair.src._graph_props.id === node._graph_props.id && !neighbours.has(pair.dst))
+                neighbours.add(pair.dst);            
+        }
+        
+        return Array.from(neighbours);
     }
   
 };
 export default graphutils;
+
+/**
+ * 
+ */
