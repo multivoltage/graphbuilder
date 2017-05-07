@@ -82,6 +82,14 @@ const graphutils = {
             }
         }
         return null;
+    },
+
+    getNodes(graph){
+        return graph.nodes;
+    },
+    
+    getEdges(graph){
+        return graph.map.keys();
     }
   
 };
