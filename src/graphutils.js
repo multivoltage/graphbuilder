@@ -67,6 +67,21 @@ const graphutils = {
         }
         
         return Array.from(neighbours);
+    },
+
+    areInThisEdge(src,dst,edge){
+        return (edge.source_id === src._graph_props.id && edge.target_id === dst._graph_props.id) ||
+               (edge.target_id === dst._graph_props.id && edge.source_id === src._graph_props.id);
+    },
+
+    getDistance(src,dst,graph){
+        for(let [edge,pair] of graph.map){
+            // if this edge contains both src and dst
+            if(this.areInThisEdge(src,dst,edge)){
+                return edge.distance;
+            }
+        }
+        return null;
     }
   
 };

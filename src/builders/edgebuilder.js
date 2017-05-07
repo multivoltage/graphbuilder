@@ -12,8 +12,8 @@ const edgebuilder = {
       type: 'edge',      
       id: source._graph_props.id + '_' + target._graph_props.id,
       label: label,
-      //source_id: source._graph_props.id,
-      //target_id: target._graph_props.id,
+      source_id: source._graph_props.id,
+      target_id: target._graph_props.id,
       distance: distance,
       metadata: metadata
     };

@@ -1,5 +1,7 @@
-import graphbuilder from './builders/graphbuilder.js'
-import graphutils from './graphutils.js'
+import graphutils from '../src/graphutils.js';
+import graphbuilder from '../src/builders/graphbuilder.js';
+
+// simulate this wihout considering directions -> https://www.usna.edu/Users/cs/roche/courses/s12si335/u06/ex2color.png
 
 let a = { name: 'a', city: 'rome' };
 let b = { name: 'b', country: 'germany' };
@@ -24,8 +26,15 @@ const graph = graphbuilder
                 .withEdge(e,b,4,e.name+b.name)
                 .build();
 
-//console.log(graph);
 
-// c,d,b
+test('distance from A to B is 6', () => {
+  expect(graphutils.getDistance(a,b,graph)).toBe(6);
+});
 
-console.log(graphutils.getDistance(a,c,graph));
+test('distance from A to C is 6', () => {
+  expect(graphutils.getDistance(a,c,graph)).toBe(6);
+});
+
+test('distance from A to E is null', () => {
+  expect(graphutils.getDistance(a,e,graph)).toBe(null);
+});
