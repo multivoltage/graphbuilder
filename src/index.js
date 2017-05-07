@@ -24,8 +24,5 @@ const graph = graphbuilder
                 .withEdge(e,b,4,e.name+b.name)
                 .build();
 
-//console.log(graph);
 
-// c,d,b
-
-console.log(graphutils.getDistance(a,c,graph));
+console.log(graphutils.getMinPath(a,e,graph));
