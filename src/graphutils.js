@@ -55,11 +55,15 @@ const graphutils = {
         
         let neighbours = new Set();
         for(let [edge,pair] of graph.map){
-            if(pair.src._graph_props.id === node._graph_props.id && !neighbours.has(pair.src))
-                neighbours.add(pair.src);
-            
-            if(pair.src._graph_props.id === node._graph_props.id && !neighbours.has(pair.dst))
-                neighbours.add(pair.dst);            
+            // check for src is in pair and take dst 
+            if(pair.src._graph_props.id === node._graph_props.id){
+                // add to neightbours only if is necessary
+                if(!neighbours.has(pair.dst))
+                    neighbours.add(pair.dst);
+            } else if(pair.dst._graph_props.id === node._graph_props.id){
+                if(!neighbours.has(pair.src))
+                    neighbours.add(pair.src);
+            }
         }
         
         return Array.from(neighbours);

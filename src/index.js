@@ -7,6 +7,7 @@ let c = { name: 'c', isFavorite: true };
 let d = { name: 'd', surname: 'simple_surname'};
 let e = { name: 'e', testUsed: 'JEST'};
 
+
 const graph = graphbuilder
                 .withNode(a.name,a.name,a)
                 .withNode(b.name,b.name,b)
@@ -25,3 +26,12 @@ const graph = graphbuilder
 
 //console.log(graph);
 
+// c,d,b
+
+let p = new Set();
+p.add(1);
+p.add(2);
+p.add(1);
+
+console.log(p);
+//console.log(graphutils.getNeighbours(e,graph));

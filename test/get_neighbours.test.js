@@ -45,7 +45,7 @@ test('B not has C as neightbours', () => {
 // these tow will fail
 test('E has C,D,B neightbours', () => {
   const expected = [c,d,b];
-  expect(graphutils.getNeighbours(d,graph)).toEqual(expect.arrayContaining(expected));
+  expect(graphutils.getNeighbours(e,graph)).toEqual(expect.arrayContaining(expected));
 });
 
 test('D has A,C,E neightbours', () => {
